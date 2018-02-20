@@ -25,4 +25,6 @@
 (require 'init-auto-insert)
 (require 'init-org)
 
+(require 'keychain-environment)
+
 (req-package-finish)
