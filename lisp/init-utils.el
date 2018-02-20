@@ -23,4 +23,11 @@
   (which-key-mode 1)
   (which-key-setup-minibuffer))
 
+
+(req-package exec-path-from-shell
+  :config
+ (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+ (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
+ )
+
 (provide 'init-utils)
