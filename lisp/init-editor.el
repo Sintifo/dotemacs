@@ -50,3 +50,5 @@
   (global-whitespace-cleanup-mode 1))
 
 (provide 'init-editor)
+
+(global-linum-mode t)
