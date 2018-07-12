@@ -17,6 +17,12 @@
   :init
   (require 'evil-magit))
 
+(req-package magit-todos
+  :require magit
+  :init
+  (add-hook 'magit-status-mode-hook
+            'magit-todos-mode))
+
 (req-package which-key
   :diminish which-key-mode
   :config
@@ -26,8 +32,7 @@
 
 (req-package exec-path-from-shell
   :config
- (exec-path-from-shell-copy-env "SSH_AGENT_PID")
- (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
- )
+  (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
 
 (provide 'init-utils)
