@@ -10,7 +10,8 @@
   :init
   (evil-leader/set-key "gs" 'magit-status)
   :config
-  (setq magit-last-seen-setup-instructions "1.4.0"))
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  )
 
 (req-package evil-magit
   :require magit
@@ -29,6 +30,10 @@
   (which-key-mode 1)
   (which-key-setup-minibuffer))
 
+(req-package pinentry
+  :init
+  (setq epa-pinentry-mode 'loopback)
+  (pinentry-start))
 
 (req-package exec-path-from-shell
   :config
