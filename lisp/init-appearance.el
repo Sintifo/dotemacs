@@ -7,6 +7,7 @@
 (show-paren-mode t)
 (blink-cursor-mode -1)
 (column-number-mode t)
+(global-hl-line-mode t)
 
 ;; Set frames by default maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -45,5 +46,10 @@
           (run-with-idle-timer 0.1 nil
                                (lambda (fg) (set-face-foreground 'mode-line fg))
                                orig-fg))))
+
+(req-package fringe-helper
+  :init
+  (unless (fboundp 'define-fringe-bitmap)
+    (defun define-fringe-bitmap (&rest _))))
 
 (provide 'init-appearance)

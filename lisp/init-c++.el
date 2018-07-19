@@ -40,36 +40,51 @@
   :config
   (setq cppcm-write-flymake-makefile nil))
 
+(defun xy//setup-cquery ()
+  (lsp-cquery-enable)
+  (yas-minor-mode)
+  (setq-local company-transformers nil)
+  (setq-local company-lsp-async t)
+  (setq-local company-lsp-cache-candidates nil))
+
+(defun xy//cquery-find-base ()
+  (interactive)
+  (lsp-ui-peek-find-custom 'base "$cquery/base"))
+
+(defun xy//cquery-find-callers ()
+  (interactive)
+  (lsp-ui-peek-find-custom 'callers "$cquery/callers"))
+
+(defun xy//cquery-find-vars ()
+  (interactive)
+  (lsp-ui-peek-find-custom 'vars "$cquery/vars"))
+
+(defun xy//cquery-find-derived ()
+  (interactive)
+  (lsp-ui-peek-find-custom 'derived "$cquery/derived"))
+
 (req-package cquery
-  :require lsp-mode lsp-ui hydra
+  :require (lsp-mode lsp-ui hydra)
   :commands (lsp-cquery-enable)
   :init
-  (add-hook 'c-mode-hook 'lsp-cquery-enable)
-  (add-hook 'c++-mode-hook 'lsp-cquery-enable)
-  (defun xy//cquery-find-base ()
-    (interactive)
-    (lsp-ui-peek-find-custom 'base "$cquery/base"))
-  (defun xy//cquery-find-callers ()
-    (interactive)
-    (lsp-ui-peek-find-custom 'callers "$cquery/callers"))
-  (defun xy//cquery-find-vars ()
-    (interactive)
-    (lsp-ui-peek-find-custom 'vars "$cquery/vars"))
-  (defun xy//cquery-find-derived ()
-    (interactive)
-    (lsp-ui-peek-find-custom 'derived "$cquery/derived"))
+  (add-hook 'c-mode-hook #'xy//setup-cquery)
+  (add-hook 'c++-mode-hook #'xy//setup-cquery)
   (evil-leader/set-key-for-mode 'c++-mode
     "n b" 'xy//cquery-find-base
     "n c" 'xy//cquery-find-callers
     "n v" 'xy//cquery-find-vars
     "n d" 'xy//cquery-find-derived)
+
   :config
-  (setq cquery-extra-init-params '(:index (:comments 2) :cacheFormat "msgpack"))
+  (add-to-list 'evil-emacs-state-modes 'cquery-tree-mode)
+
+  (setq cquery-extra-init-params '(:index (:comments 2) :completion (:detailedLabel t) :cacheFormat "msgpack"))
   (setq cquery-sem-highlight-method 'overlay)
   (cquery-use-default-rainbow-sem-highlight))
 
 ;;;; clang-format
 (req-package clang-format
+  :commands (clang-format-buffer clang-format-region)
   :init
   (evil-leader/set-key
     "mff" 'clang-format-buffer

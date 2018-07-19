@@ -1,5 +1,8 @@
 ;; init.el --- The new config file
 
+;; Increase GC Threshold
+(setq gc-cons-threshold 20000000)
+
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 ;;;; Put Customize stuff into separate file
@@ -18,12 +21,15 @@
 (require 'init-buffer)
 (require 'init-lsp)
 (require 'init-c++)
+(require 'init-tex)
 (require 'init-rust)
 (require 'init-python)
-(require 'init-lisp)
 (require 'init-web)
 (require 'init-auto-insert)
 (require 'init-org)
 
 
 (req-package-finish)
+
+;; Reset GC Threshold
+(setq gc-cons-threshold 800000)

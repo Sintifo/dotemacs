@@ -1,13 +1,10 @@
 ;;;; General settings
-;; Increase GC Threshold
-(setq gc-cons-threshold 20000000)
-
 ;; Fix scrolling
 (setq mouse-wheel-scroll-amount '(5)
       mouse-wheel-progressive-speed nil)
 
 ;; Truncate long lines
-(toggle-truncate-lines 1)
+(setq-default truncate-lines 1)
 
 ;; Backup files
 (setq backup-directory-alist `(("." . "~/.saves"))

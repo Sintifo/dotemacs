@@ -3,6 +3,9 @@
 (delete-selection-mode t)
 (electric-pair-mode t)
 
+(bind-keys*
+ ("C-;" . comment-line))
+
 (req-package editorconfig
   :diminish
   :init
@@ -45,9 +48,21 @@
   :config
   (company-quickhelp-mode 1))
 
-(req-package whitespace-cleanup-mode
+(req-package ws-butler
   :config
-  (global-whitespace-cleanup-mode 1))
+  (add-hook 'prog-mode-hook #'ws-butler-mode)
+  (add-hook 'conf-mode-hook #'ws-butler-mode)
+  (add-hook 'org-mode-hook #'ws-butler-mode))
+
+(req-package markdown-mode
+  :defer t
+  :require ws-butler
+  :init
+  (add-hook 'markdown-mode-hook #'ws-butler-mode)
+  (add-hook 'markdown-mode-hook #'(lambda () (setq truncate-lines nil))))
+
+(req-package yasnippet
+  :commands yas-minor-mode)
 
 (provide 'init-editor)
 
