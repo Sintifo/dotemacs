@@ -13,7 +13,7 @@
 
 ;; Font
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka Term-11"))
+             '(font . "Iosevka Term SS11"))
 
 (defun xy//remove-bold ()
   (interactive)
