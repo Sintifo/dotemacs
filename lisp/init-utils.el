@@ -38,6 +38,7 @@
 (req-package exec-path-from-shell
   :config
   (exec-path-from-shell-copy-env "SSH_AGENT_PID")
-  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
+  (exec-path-from-shell-copy-env "GPG_AGENT_INFO"))
 
 (provide 'init-utils)
