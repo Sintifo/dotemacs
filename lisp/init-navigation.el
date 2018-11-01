@@ -1,26 +1,40 @@
-(req-package swiper
+(req-package ivy
   :diminish ivy-mode
   :demand t
-  :bind (("C-s" . swiper))
   :config
-  (setq ivy-use-virtual-buffers t)
+  (setq ivy-use-virtual-buffers t
+        ivy-virtual-abbreviate 'full
+        ivy-extra-directories nil) ;; Remove .. and .
   (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
   (define-key ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
   (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "C-h") 'ivy-backward-kill-word)
   (ivy-mode 1))
 
+(req-package swiper
+  :require ivy
+  :bind (("C-s" . swiper)))
+
+(req-package ivy-rich
+  :require ivy
+  :demand t
+  :config
+  (ivy-rich-mode))
+
 (req-package ivy-xref
-  :require swiper
-  :commands ivy-xref-show-xrefs
+  :require ivy
   :init
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (req-package ivy-hydra
-  :require swiper)
+  :demand t
+  :require ivy)
+
+(req-package smex
+  :demand t)
 
 (req-package counsel
-  :require evil-leader
+  :require (evil-leader smex)
   :diminish
   :demand t
   :config

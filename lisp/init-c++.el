@@ -42,7 +42,6 @@
 
 (defun xy//setup-cquery ()
   (lsp-cquery-enable)
-  (yas-minor-mode)
   (setq-local company-transformers nil)
   (setq-local company-lsp-async t)
   (setq-local company-lsp-cache-candidates nil))
@@ -59,21 +58,16 @@
   (interactive)
   (lsp-ui-peek-find-custom 'vars "$cquery/vars"))
 
-(defun xy//cquery-find-derived ()
-  (interactive)
-  (lsp-ui-peek-find-custom 'derived "$cquery/derived"))
-
 (req-package cquery
-  :require (lsp-mode lsp-ui hydra)
   :commands (lsp-cquery-enable)
+  :hook ((c-mode c++-mode) . xy//setup-cquery)
   :init
   (add-hook 'c-mode-hook #'xy//setup-cquery)
   (add-hook 'c++-mode-hook #'xy//setup-cquery)
   (evil-leader/set-key-for-mode 'c++-mode
     "n b" 'xy//cquery-find-base
     "n c" 'xy//cquery-find-callers
-    "n v" 'xy//cquery-find-vars
-    "n d" 'xy//cquery-find-derived)
+    "n v" 'xy//cquery-find-vars)
 
   :config
   (add-to-list 'evil-emacs-state-modes 'cquery-tree-mode)
@@ -81,14 +75,6 @@
   (setq cquery-extra-init-params '(:index (:comments 2) :completion (:detailedLabel t) :cacheFormat "msgpack"))
   (setq cquery-sem-highlight-method 'overlay)
   (cquery-use-default-rainbow-sem-highlight))
-
-;;;; clang-format
-(req-package clang-format
-  :commands (clang-format-buffer clang-format-region)
-  :init
-  (evil-leader/set-key
-    "mff" 'clang-format-buffer
-    "mfr" 'clang-format-region))
 
 ;;;; gdb
 (setq gdb-many-windows t)

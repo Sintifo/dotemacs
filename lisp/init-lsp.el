@@ -1,4 +1,11 @@
-(req-package lsp-mode)
+(req-package lsp-mode
+  :config
+  (add-hook 'lsp-mode-hook 'flycheck-mode-on-safe)
+  (add-hook 'lsp-mode-hook 'yas-minor-mode)
+  (evil-leader/set-key
+    "mff" 'lsp-format-buffer
+    "mfr" 'lsp-format-region
+    "ma" 'lsp-execute-code-action))
 
 (req-package lsp-ui
   :require lsp-mode
@@ -15,6 +22,7 @@
 
 (req-package company-lsp
   :require lsp-mode
+  :demand t
   :init
   (push 'company-lsp company-backends))
 

@@ -18,7 +18,6 @@
   (defun xy//search-rg ()
     (interactive)
     (counsel-rg nil (projectile-project-root)))
-  (bind-key "C-c a" 'xy//search-rg)
   :config
   (evil-leader/set-key
     "p" projectile-command-map
@@ -28,9 +27,7 @@
 
 ;;;; Flycheck
 (req-package flycheck
-  :commands flycheck-mode-on-safe
-  :init
-  (add-hook 'c++-mode-hook 'flycheck-mode-on-safe)
-  (add-hook 'c-mode-hook 'flycheck-mode-on-safe))
+  :commands flycheck-mode
+  :hook ((c++-mode c-mode) . flycheck-mode))
 
 (provide 'init-buffer)

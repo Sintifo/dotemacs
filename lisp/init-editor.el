@@ -8,11 +8,11 @@
 
 (req-package editorconfig
   :diminish
-  :init
+  :demand t
+  :config
   (editorconfig-mode 1))
 
 (req-package anzu
-  :demand t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp)))
 
@@ -27,6 +27,7 @@
   (global-undo-tree-mode 1))
 
 (req-package company
+  :demand t
   :config
   (global-company-mode 1)
   (global-set-key (kbd "M-TAB") #'company-complete)
@@ -37,32 +38,30 @@
 
 (req-package company-flx
   :require company
+  :demand t
   :config
   (company-flx-mode 1))
 (req-package company-statistics
   :require company
+  :demand t
   :config
   (company-statistics-mode 1))
 (req-package company-quickhelp
   :require company
+  :demand t
   :config
   (company-quickhelp-mode 1))
 
 (req-package ws-butler
-  :config
-  (add-hook 'prog-mode-hook #'ws-butler-mode)
-  (add-hook 'conf-mode-hook #'ws-butler-mode)
-  (add-hook 'org-mode-hook #'ws-butler-mode))
+  :hook ((prog-mode conf-mode org-mode) . ws-butler-mode))
 
 (req-package markdown-mode
-  :defer t
-  :require ws-butler
-  :init
+  :mode "\\.md\\'"
+  :config
   (add-hook 'markdown-mode-hook #'ws-butler-mode)
   (add-hook 'markdown-mode-hook #'(lambda () (setq truncate-lines nil))))
 
-(req-package yasnippet
-  :commands yas-minor-mode)
+(req-package yasnippet)
 
 (provide 'init-editor)
 
