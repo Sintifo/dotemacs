@@ -64,5 +64,3 @@
 (req-package yasnippet)
 
 (provide 'init-editor)
-
-(global-linum-mode t)
